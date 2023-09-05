@@ -6,9 +6,8 @@ Here's a description of the Sleeping Barber Problem:
 
 ### Scenario:
 
-There is a barber shop with one barber and a waiting room with a limited number of chairs for customers.
-Customers arrive at the barber shop one by one. If there are empty chairs in the waiting room, they take a seat. If all chairs are occupied, they leave.
-The barber alternates between cutting hair and sleeping. When a customer arrives, the barber either cuts their hair immediately (if the barber is awake) or goes to sleep (if the barber is currently cutting someone's hair).
+There is a barber shop with one barber and a waiting room with a limited number of chairs for customers. Customers arrive at the barber shop one by one. If there are empty chairs in the waiting room, they take a seat. If all chairs are occupied, they leave. The barber alternates between cutting hair and sleeping. When a customer arrives, the barber either cuts their hair immediately (if the barber is awake) or goes to sleep (if the barber is currently cutting someone's hair).
+
 -------------
 
 ### Rules:
