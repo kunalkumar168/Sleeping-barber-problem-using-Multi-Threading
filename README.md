@@ -40,7 +40,7 @@ Solving the Sleeping Barber Problem requires using synchronization mechanisms li
 Run the below commands to generate the output :
 1. Run `g++ -std=c++11 driver.cpp Shop.cpp -o sleepingBarbers -lpthread` to make a executable file.
 2. Run `./sleepingBarbers 2 5 10 20000 > output.txt` to generate the output. Here :
-        * nBarbers = 2
-        * nChairs = 5
-        * nCustomers = 10
-        * ServiceTime = 20000 us
+       2.1 nBarbers = 2
+       2.2 nChairs = 5
+       2.3 nCustomers = 10
+       2.4 ServiceTime = 20000 us
