@@ -1,4 +1,4 @@
-# Sleeping-barber-problem-using-Multi-Threading
+## Sleeping Barber Problem using Multi-Threading
 
 The Sleeping Barber Problem is a classic synchronization problem often used in computer science and operating systems to illustrate issues related to concurrent programming, mutual exclusion, and inter-process communication. It provides a scenario where multiple threads (representing customers and a barber) interact with shared resources (the barber's chair and a waiting room) in a way that requires careful synchronization to avoid conflicts and ensure correctness.
 
