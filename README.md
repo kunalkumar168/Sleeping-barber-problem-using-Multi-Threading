@@ -32,3 +32,15 @@ Solving the Sleeping Barber Problem requires using synchronization mechanisms li
 
 1. Use two critical Sections, one for barbers, one for customers.
 2. Use ```pthread_cond_timedwait()```. For example, A barber has to enter a critical section to wait for a customer. To avoid deadlocks, the barber thread waits for a customer to give him a service signal within a certian time period. Then it goes back to check any customer sits on his chair.
+
+--------------
+
+### Setup
+
+Run the below commands to generate the output :
+1. Run `g++ -std=c++11 driver.cpp Shop.cpp -o sleepingBarbers -lpthread` to make a executable file.
+2. Run `./sleepingBarbers 2 5 10 20000 > output.txt` to generate the output. Here :
+        * nBarbers = 2
+        * nChairs = 5
+        * nCustomers = 10
+        * ServiceTime = 20000 us
