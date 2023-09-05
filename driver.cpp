@@ -1,12 +1,9 @@
 #include <iostream>    // cout
 #include <sys/time.h> // gettimeofday
-#include <unistd.h>
-#include <cstdlib>
-#include <stdlib.h>
+#include <unistd.h> //usleep
 #include "Shop.h"
 
 using namespace std;
-
 
 // function prototype
 void *barber( void * );    // the prototype of the barber thread function
@@ -26,7 +23,7 @@ int main( int argc, char *argv[] ) {
 
   // validate the arguments
   if ( argc != 5 ) {
-    cerr << "usage: sleepingBarber nBaerbers nChairs nCustomers serviceTime" << endl;
+    cerr << "usage: sleepingBarber nBarbers nChairs nCustomers serviceTime" << endl;
     return -1;
   }
   int nBarbers = atoi( argv[1] );      // # barbers working in the barbershop
@@ -34,7 +31,6 @@ int main( int argc, char *argv[] ) {
   int nCustomers = atoi( argv[3] );    // # customers who need a haircut service
   int serviceTime = atoi( argv[4] );   // each barber's service time ( in u seconds)
 
-  cout << "barbers: " << nBarbers << " chairs: " << nChairs << " customer: " << nCustomers << " serviceTime: " << serviceTime << endl;
   pthread_t barber_thread[nBarbers];
   pthread_t customer_threads[nCustomers];
   Shop shop( nBarbers, nChairs );      // instantiate a barbershop
@@ -76,6 +72,7 @@ void *barber( void *arg ) {
     usleep( serviceTime );     // spend a service time
     shop.byeCustomer( id );    // release the customer
   }
+  return NULL;
 }
 
 // the customer thread function
@@ -90,4 +87,6 @@ void *customer( void *arg ) {
   int barber = -1;
   if ( ( barber = shop.visitShop( id ) ) != -1 ) // am I assigned to barber i or no barber (-1)?
     shop.leaveShop( id, barber );                // wait until my service is finished
+
+  return NULL;
 }

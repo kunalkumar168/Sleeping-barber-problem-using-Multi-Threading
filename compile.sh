@@ -1,3 +1,3 @@
 #!/bin/sh
 
-g++ driver.cpp Shop.cpp Shop.h -o sleepingBarbers -lpthread -std=c++11
+g++ -std=c++11 driver.cpp Shop.cpp -o sleepingBarbers -lpthread

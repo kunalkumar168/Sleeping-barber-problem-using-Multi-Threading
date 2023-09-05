@@ -1,55 +1,57 @@
-#ifndef __SHOP_H__
-#define __SHOP_H__
-
-#include <stdlib.h>
+#ifndef _SHOP_H_
+#define _SHOP_H_
+#include <pthread.h> // the header file for the pthread library
+#include <queue> // the STL library: queue
+#include <map>
 #include <iostream>
-#include <sstream>
-#include <pthread.h>
-#include <queue>
-#include <deque>
-#include <unordered_map>
-#include <string>
-
 using namespace std;
+#define DEFAULT_CHAIRS 3 // the default number of chairs for waiting = 3
+#define DEFAULT_BARBERS 1 // the default number of barbers = 1
 
-#define DEFAULT_CHAIRS 3
-#define DEFAULT_BARBERS 1
-#define errExitEN(en, msg) \
-do { errno = en; perror(msg); exit(EXIT_FAILURE); \
-} while (0)
-	
 class Shop {
-    public:
-    Shop(int nBarbers, int nChairs);
-    Shop();
-    ~Shop();
+public:
+    Shop( int nBarbers, int nChairs );
+    Shop( ); 
+    int visitShop( int customerId ); // return a non-negative number only when a customer got a service
     
-    int visitShop(int id);
-    void leaveShop(int customerId, int barberId);
-    void helloCustomer(int id);
-    void byeCustomer(int id);
-    int nDropsOff;
+    void leaveShop( int customerId, int barberId );
+    void helloCustomer( int barberId );
     
-    private:
-    void initialize();
-    inline string int2string(int i);
-    inline void print(int person, string message);
-    bool isAllChairsFull();
-    bool isAllBarbersBusy();
+    void byeCustomer( int barberId );
+
+    int nDropsOff = 0; // the number of customers dropped off
+
+private:
     int nBarbers;
     int nChairs;
-    int nAvailableChairs;
-    
-    deque<int> freeBarbers;      //?
-    vector<int> seats;           //?for customer or barber 
 
-	// sperate critical section for barbers and customers 
-    pthread_mutex_t barbermtx;
-    pthread_mutex_t customermtx;
-	
-	
-	pthread_cond_t customer_waiting_cond; //?
-    pthread_cond_t* barber_waiting_conds;//?
-    unordered_map<int,pthread_cond_t*> customer_waiting_for_service_conds;//? 
+    enum customerState {WAIT, CHAIR, LEAVING};
+
+    struct Barber {
+
+        int id;
+        pthread_cond_t barberCond;
+        int myCustomer = -1; //no customer by default
+    };
+
+    struct Customer {
+        int id;
+        pthread_cond_t customerCond;
+        customerState state = WAIT; //waiting state by default
+        int myBarber = -1; //no barber by default
+    };
+
+
+    Barber *barbers; //array of barber objects
+    map<int, Customer> customers; //container for customer objects
+
+
+    queue<int> waitingCustomers;
+    queue<int> sleepingBarbers;
+
+    pthread_mutex_t mutex1;
+
+    Barber* getBarber(int barberId);
 };
+
 #endif
